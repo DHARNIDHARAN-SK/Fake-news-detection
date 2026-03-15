@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Fake News Detector — Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='2'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.35-4.35'/></svg>"/>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="nav-brand">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    TruthLens
+  </div>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/detect">Detect News</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+</nav>
+
+<div class="page">
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        AI-Powered Misinformation Detection
+      </div>
+      <h1 class="hero-title">
+        Fake News<br/><span class="accent">Detector</span>
+      </h1>
+      <p class="hero-sub">
+        Paste any article, headline, or news snippet and our intelligent analysis engine will assess its credibility in seconds — with clear explanations and actionable recommendations.
+      </p>
+      <div class="hero-actions">
+        <a href="{{ url_for('detect') }}" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Start Detecting
+        </a>
+        <a href="#features" class="btn btn-outline">Learn How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats ── -->
+  <div class="stats-strip">
+    <div class="stat-item fade-in">
+      <div class="stat-num" data-target="98" data-suffix="%">0%</div>
+      <div class="stat-lbl">Detection Accuracy</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-num" data-target="2400000" data-suffix="+">0</div>
+      <div class="stat-lbl">Articles Analysed</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-num" data-target="150" data-suffix="ms">0ms</div>
+      <div class="stat-lbl">Avg. Response Time</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-num" data-target="47" data-suffix="+">0</div>
+      <div class="stat-lbl">Languages Supported</div>
+    </div>
+  </div>
+
+  <!-- ── Features ── -->
+  <section class="features" id="features">
+    <div class="features-header fade-in">
+      <div class="section-label">Capabilities</div>
+      <h2 class="section-title">Why TruthLens?</h2>
+      <p class="section-sub">Our multi-layer analysis engine combines NLP, source verification, and linguistic pattern recognition to give you the clearest picture of any news item.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🧠</div>
+        <h3>NLP Analysis</h3>
+        <p>Natural language processing scans emotional tone, linguistic patterns, and writing style to detect manipulation techniques common in fabricated stories.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🔗</div>
+        <h3>Source Verification</h3>
+        <p>Cross-references claims against our database of verified publications, fact-check archives, and credibility indices to validate original sourcing.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📊</div>
+        <h3>Confidence Scoring</h3>
+        <p>Every result comes with a transparent confidence percentage and detailed breakdown of the specific signals that drove the prediction.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">⚡</div>
+        <h3>Real-Time Results</h3>
+        <p>Get analysis in under two seconds. No account required, no waiting — paste your text and the verdict appears instantly.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🌐</div>
+        <h3>Multi-Language</h3>
+        <p>Detect misinformation across 47+ languages. Our models are trained on diverse global datasets to catch culturally specific patterns.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🛡️</div>
+        <h3>Privacy First</h3>
+        <p>Your text is never stored or shared. Analysis happens in a stateless environment ensuring complete privacy for every submission.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How It Works ── -->
+  <section class="how">
+    <div style="text-align:center;max-width:600px;margin:0 auto 0">
+      <div class="section-label">Process</div>
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-sub">Four intelligent layers working together to deliver accurate, explainable verdicts in real time.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step fade-in">
+        <div class="step-num">01</div>
+        <div class="step-icon">📋</div>
+        <h3>Input Text</h3>
+        <p>Paste any news article, headline, social media post, or excerpt — up to 2,000 characters.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">02</div>
+        <div class="step-icon">🔬</div>
+        <h3>Deep Analysis</h3>
+        <p>Our engine runs linguistic, structural, and semantic analysis across 80+ detection signals simultaneously.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">03</div>
+        <div class="step-icon">🧮</div>
+        <h3>Score &amp; Classify</h3>
+        <p>A confidence score is calculated and the content is classified as Real or Fake with a clear probability rating.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">04</div>
+        <div class="step-icon">📝</div>
+        <h3>Get Explanation</h3>
+        <p>Receive a detailed breakdown with the reasons, key indicators, and personalised recommendations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta">
+    <div class="cta-card fade-in">
+      <div class="section-label" style="color:rgba(255,255,255,.6)">Ready?</div>
+      <h2 class="section-title">Stop Misinformation<br/>In Its Tracks</h2>
+      <p>Don't let fake news mislead you or your community. Run any article through TruthLens in seconds and share with confidence.</p>
+      <a href="detect.html" class="btn btn-cyan" style="display:inline-flex">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Analyse Text Now — It's Free
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>© 2025 <span>TruthLens</span> · Fake News Detector &nbsp;|&nbsp; Built to protect the truth</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Fake News Detector — Detect</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='2'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.35-4.35'/></svg>"/>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="nav-brand">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    TruthLens
+  </div>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/detect">Detect News</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+</nav>
+
+<div class="page">
+
+  <!-- ── Page Header ── -->
+  <div class="detect-hero fade-in">
+    <div class="section-label">Analysis Engine</div>
+    <h1 class="section-title">Fake News Detector</h1>
+    <p class="section-sub" style="margin:12px auto 0;max-width:520px;text-align:center">
+      Paste any news article or headline below. Our AI analyses linguistic patterns, emotional bias, and source credibility signals to deliver an instant verdict.
+    </p>
+  </div>
+
+  <!-- ── Main Detection Area ── -->
+  <div class="detect-main">
+
+    <!-- Input Card -->
+    <div class="input-card fade-in">
+      <div class="input-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        News Text
+        <span class="char-count" id="charCount">0 / 2000</span>
+      </div>
+
+      <textarea
+        id="newsInput"
+        placeholder="Paste your news article, headline, or social media post here…&#10;&#10;Tip: Longer text (50+ words) produces more accurate results."
+        maxlength="2000"
+        spellcheck="true"
+        aria-label="News text input"
+      ></textarea>
+
+      <div class="input-actions">
+        <span class="word-count" id="wordCount">0 words</span>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="btn btn-outline" id="clearBtn" style="padding:9px 18px;font-size:.85rem">
+            ✕ Clear
+          </button>
+          <button class="btn btn-primary" id="detectBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            Detect
+          </button>
+        </div>
+      </div>
+      <p style="font-size:.78rem;color:var(--muted);margin-top:10px">
+        Tip: Press <kbd style="background:var(--border);padding:1px 6px;border-radius:4px;font-family:monospace">Ctrl + Enter</kbd> to detect instantly.
+      </p>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="detecting-indicator">
+      <div class="spinner"></div>
+      <span>Analysing content<span class="detecting-dots"></span></span>
+      <span style="margin-left:auto;font-size:.78rem;color:var(--muted);font-family:'JetBrains Mono',monospace">Running 80+ checks</span>
+    </div>
+
+    <!-- Result Card (populated by JS) -->
+    <div class="result-card" style="display:none" role="region"></div>
+    <!-- Sample texts -->
+    <div class="fade-in" style="margin-top:36px">
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">
+        Try a sample:
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <button class="sample-btn" onclick="loadSample('fake1')" style="padding:8px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1px solid var(--red-lt);background:var(--red-lt);color:var(--red);font-weight:600;transition:all .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+          🚨 Sample Fake News
+        </button>
+        <button class="sample-btn" onclick="loadSample('real1')" style="padding:8px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1px solid var(--green-lt);background:var(--green-lt);color:var(--green);font-weight:600;transition:all .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+          ✅ Sample Real News
+        </button>
+        <button class="sample-btn" onclick="loadSample('fake2')" style="padding:8px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;border:1px solid var(--red-lt);background:var(--red-lt);color:var(--red);font-weight:600;transition:all .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+          🚨 Sample Conspiracy
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Tips Section ── -->
+  <section style="padding:0 5% 80px;max-width:900px;margin:0 auto;position:relative;z-index:1">
+    <div class="features-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="feature-card fade-in" style="padding:24px">
+        <div class="feature-icon" style="width:40px;height:40px;font-size:1.1rem">🎯</div>
+        <h3 style="font-size:.95rem">Be Sceptical of Outrage</h3>
+        <p>If content makes you immediately angry or shocked, pause before sharing. Emotional provocation is a hallmark of fake news.</p>
+      </div>
+      <div class="feature-card fade-in" style="padding:24px">
+        <div class="feature-icon" style="width:40px;height:40px;font-size:1.1rem">🔎</div>
+        <h3 style="font-size:.95rem">Check the Source</h3>
+        <p>Verify the website publishing the article. Many fake news sites mimic legitimate outlets with near-identical domain names.</p>
+      </div>
+      <div class="feature-card fade-in" style="padding:24px">
+        <div class="feature-icon" style="width:40px;height:40px;font-size:1.1rem">📅</div>
+        <h3 style="font-size:.95rem">Check the Date</h3>
+        <p>Old stories are frequently reshared without context. Always verify the original publication date before drawing conclusions.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>© 2025 <span>TruthLens</span> · Fake News Detector &nbsp;|&nbsp; Built to protect the truth</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+// Sample texts loader
+const SAMPLES = {
+  fake1: `BREAKING!!! SHOCKING TRUTH they don't want you to know!!! Scientists EXPOSED for hiding MIRACLE CURE from the public!!! Big Pharma has been COVERING UP this amazing treatment that CURES everything in just 3 days! SHARE THIS BEFORE IT GETS REMOVED!!! Thousands of lives could be saved but the mainstream media REFUSES to cover this bombshell!!! Wake up people, the deep state is controlling what you see!!!`,
+  real1: `According to a statement released by NASA officials on Tuesday, the James Webb Space Telescope has captured its most detailed images of exoplanet atmospheres to date, researchers confirmed. The findings, published in the peer-reviewed journal Nature Astronomy, indicate the presence of water vapour and carbon dioxide in the atmosphere of planet K2-18b, approximately 120 light-years from Earth. Dr. Nikku Madhusudhan, lead researcher at the University of Cambridge, said in a press conference that while the results are promising, further observation over the next 18 months will be required before any definitive conclusions can be drawn regarding potential habitability.`,
+  fake2: `The government is putting microchips in vaccines to track every citizen!!! I have PROOF from an anonymous source that 5G towers are activating these chips RIGHT NOW!!! Multiple whistleblowers have come forward but they've all been silenced by the corrupt elite!!! This is the biggest conspiracy in human history!!! Your doctor LIED to you!!! Share this URGENT message before the internet censors delete it forever!!!`,
+};
+
+function loadSample(key) {
+  const input = document.getElementById('newsInput');
+  if (!input) return;
+  input.value = SAMPLES[key] || '';
+  input.dispatchEvent(new Event('input'));
+  input.focus();
+  input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>

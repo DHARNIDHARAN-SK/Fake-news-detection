@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Fake News Detector — Contact</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='2'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.35-4.35'/></svg>"/>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="nav-brand">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    TruthLens
+  </div>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/detect">Detect News</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+</nav>
+
+<div class="page">
+
+  <!-- Page header -->
+  <div style="padding:60px 5% 0;text-align:center;position:relative;z-index:1" class="fade-in">
+    <div class="section-label">Get In Touch</div>
+    <h1 class="section-title" style="font-size:clamp(2.2rem,5vw,4rem)">Contact Us</h1>
+    <p class="section-sub" style="margin:14px auto 0;text-align:center;max-width:480px">
+      Questions, feedback, or want to report a misclassification? We'd love to hear from you.
+    </p>
+  </div>
+
+  <!-- ── Contact Layout ── -->
+  <div class="contact-layout">
+
+    <!-- Left: Info -->
+    <div class="contact-info fade-in">
+      <div class="section-label">Reach Out</div>
+      <h2 class="section-title" style="font-size:2.2rem">We're here<br/>to help.</h2>
+      <p class="section-sub">
+        Whether you've found an error in our detection results, have a partnership inquiry, or just want to say hello — our team responds within 24 hours.
+      </p>
+
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div class="contact-item-text">
+            <h4>Email</h4>
+            <p>hello@truthlens.ai</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">💬</div>
+          <div class="contact-item-text">
+            <h4>Live Chat</h4>
+            <p>Available Mon–Fri, 9am–6pm IST</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🐛</div>
+          <div class="contact-item-text">
+            <h4>Report a Bug</h4>
+            <p>bugs@truthlens.ai</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🤝</div>
+          <div class="contact-item-text">
+            <h4>Partnerships</h4>
+            <p>partnerships@truthlens.ai</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social links -->
+      <div style="margin-top:32px">
+        <p style="font-size:.8rem;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px">Follow Us</p>
+        <div style="display:flex;gap:10px">
+          <a href="#" style="width:40px;height:40px;border-radius:10px;background:rgba(30,58,138,.08);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(6,182,212,.4)'" onmouseout="this.style.borderColor='var(--border)'">𝕏</a>
+          <a href="#" style="width:40px;height:40px;border-radius:10px;background:rgba(30,58,138,.08);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(6,182,212,.4)'" onmouseout="this.style.borderColor='var(--border)'">in</a>
+          <a href="#" style="width:40px;height:40px;border-radius:10px;background:rgba(30,58,138,.08);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(6,182,212,.4)'" onmouseout="this.style.borderColor='var(--border)'">🐙</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="form-card fade-in">
+      <h2>Send a Message</h2>
+      <form id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="firstName">First Name *</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Arjun" required/>
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Sharma"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required/>
+        </div>
+
+        <div class="field">
+          <label for="subject">Subject *</label>
+          <select id="subject" name="subject" required style="appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;">
+            <option value="" disabled selected>Select a topic…</option>
+            <option value="detection">Detection Issue / Feedback</option>
+            <option value="bug">Bug Report</option>
+            <option value="partnership">Partnership Inquiry</option>
+            <option value="press">Press / Media</option>
+            <option value="api">API Access</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" placeholder="Tell us more about your enquiry…" required></textarea>
+        </div>
+
+        <div class="form-footer">
+          <span class="form-note">* Required fields. We reply within 24 hours.</span>
+          <button type="submit" class="btn btn-primary">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+            Send Message
+          </button>
+        </div>
+
+        <div class="submit-success">
+          <span>✅</span>
+          <span>Message sent! We'll be in touch within 24 hours.</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── FAQ ── -->
+  <div style="padding:0 5% 24px;text-align:center;position:relative;z-index:1" class="fade-in">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title" style="font-size:2.2rem">Common Questions</h2>
+  </div>
+
+  <div class="faq fade-in">
+    <div class="faq-item">
+      <button class="faq-q">
+        How accurate is TruthLens?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-a">
+        Our detection engine achieves approximately 94–98% accuracy on our benchmark datasets. Accuracy varies by language and domain. We continuously retrain on new misinformation patterns to stay current.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        Is my submitted text stored or shared?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-a">
+        No. All submissions are processed in a stateless environment and are never stored, logged, or shared with third parties. Your privacy is our highest priority.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        Can I use TruthLens via API?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-a">
+        Yes! We offer a REST API for developers and publishers who want to integrate fake news detection directly into their platforms. Contact us using the form above to request API access and pricing information.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        What languages are supported?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-a">
+        TruthLens currently supports 47+ languages including English, Hindi, Tamil, Spanish, French, Arabic, German, Chinese, and Portuguese. New languages are added quarterly.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        What if I think a result is wrong?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-a">
+        We welcome misclassification reports. Use the contact form above, select "Detection Issue / Feedback", and paste the text along with your concern. Our team reviews all reports to improve model accuracy.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>© 2025 <span>TruthLens</span> · Fake News Detector &nbsp;|&nbsp; Built to protect the truth</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
