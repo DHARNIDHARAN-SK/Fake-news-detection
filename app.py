@@ -28,13 +28,14 @@ def predict():
     vector = vectorizer.transform([text])
 
     prediction = model.predict(vector)[0]
+    confidence = round(float(model.predict_proba(vector)[0].max()) * 100, 1)
 
     if prediction == 1:
         result = "REAL NEWS"
     else:
         result = "FAKE NEWS"
 
-    return jsonify({"prediction": result})
+    return jsonify({"prediction": result, "confidence": confidence})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))

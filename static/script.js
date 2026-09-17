@@ -131,51 +131,6 @@ const REAL_SIGNALS = [
     rec: "Content appears authentic. For important decisions, always seek original documents or official statements when cited." },
 ];
 
-// ── Core detection logic (heuristic + randomised simulation) ──
-function analyseText(text) {
-  const lower = text.toLowerCase();
-
-  // Fake signals scoring
-  let fakeScore = 0;
-  const fakeKeywords = ['breaking','exclusive','shocking','unbelievable','they don\'t want you','secret','cover-up',
-    'mainstream media','deep state','wake up','truth','exposed','hoax','fake','fraud','corrupt','lie','lies',
-    '!!!','???','wake up','share before removed','must see','you won\'t believe','bombshell','urgent'];
-  const realKeywords = ['according to','reported by','said in a statement','officials confirmed','researchers found',
-    'study shows','data indicates','spokesperson','press release','on record','analysts say','experts note',
-    'per the report','evidence suggests','source confirmed'];
-
-  fakeKeywords.forEach(k => { if (lower.includes(k)) fakeScore += 1.8; });
-  realKeywords.forEach(k => { if (lower.includes(k)) fakeScore -= 2.2; });
-
-  // Caps ratio
-  const capsRatio = (text.match(/[A-Z]/g) || []).length / Math.max(text.length, 1);
-  if (capsRatio > 0.18) fakeScore += 4;
-
-  // Exclamation density
-  const exclCount = (text.match(/!/g) || []).length;
-  if (exclCount > 2) fakeScore += exclCount * 1.2;
-
-  // Short text penalty
-  const wordCount = text.trim().split(/\s+/).length;
-  if (wordCount < 20) fakeScore += 2;
-
-  // Source-like patterns
-  if (/\b(www\.|https?:|\.com|\.org|\.gov)\b/i.test(text)) fakeScore -= 2;
-
-  // Add a small random variance for realism
-  fakeScore += (Math.random() - 0.5) * 4;
-
-  const isFake = fakeScore > 3;
-  // Confidence 55–97 range
-  const rawConf = Math.min(97, Math.max(55, Math.abs(fakeScore) * 6 + 55));
-  const confidence = Math.round(rawConf);
-
-  const pool = isFake ? FAKE_SIGNALS : REAL_SIGNALS;
-  const detail = pool[Math.floor(Math.random() * pool.length)];
-
-  return { isFake, confidence, ...detail };
-}
-
 function runDetection() {
   const text = newsInput ? newsInput.value.trim() : '';
   if (!text || text.length < 15) {
@@ -189,14 +144,30 @@ function runDetection() {
   if (detectingEl)  detectingEl.classList.add('show');
   if (detectBtn)    { detectBtn.disabled = true; detectBtn.textContent = 'Analysing…'; }
 
-  // Simulate processing time
-  const delay = 1400 + Math.random() * 800;
-  setTimeout(() => {
-    const result = analyseText(text);
+  const done = () => {
     if (detectingEl) detectingEl.classList.remove('show');
     if (detectBtn)   { detectBtn.disabled = false; detectBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Detect`; }
-    renderResult(result);
-  }, delay);
+  };
+
+  // Ask the trained model (Flask /predict) for the verdict
+  fetch('/predict', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ news: text })
+  })
+    .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
+    .then(data => {
+      done();
+      const isFake = data.prediction === 'FAKE NEWS';
+      const pool = isFake ? FAKE_SIGNALS : REAL_SIGNALS;
+      const detail = pool[Math.floor(Math.random() * pool.length)];
+      renderResult({ isFake, confidence: Math.round(data.confidence), ...detail });
+    })
+    .catch(err => {
+      done();
+      console.error(err);
+      showToast('Prediction failed. Is the Flask server running?');
+    });
 }
 
 function renderResult(result) {
@@ -210,6 +181,7 @@ function renderResult(result) {
   const pctCls    = isFake ? 'fake-color' : 'real-color';
 
   resultCard.className = `result-card ${cls} show`;
+  resultCard.style.display = '';
 
   resultCard.innerHTML = `
     <div class="verdict-row">
@@ -330,35 +302,4 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
   });
-});
-
-document.getElementById("detectBtn").addEventListener("click", function () {
-
-    const text = document.getElementById("newsInput").value;
-
-    fetch("/predict", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            news: text
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-
-        const resultCard = document.querySelector(".result-card");
-
-        resultCard.innerHTML =
-        `
-        <h3>Prediction Result</h3>
-        <p style="font-size:20px;font-weight:bold">${data.prediction}</p>
-        `;
-
-        resultCard.style.display = "block";
-
-    })
-    .catch(error => console.error(error));
-
 });
